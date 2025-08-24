@@ -89,3 +89,4 @@ def delete_book(book_id: int):
             books_db.pop(i)
             return
     raise HTTPException(status_code=404, detail="Book not found")
+
