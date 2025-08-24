@@ -18,6 +18,7 @@ export default function Books(){
   const [author, setAuthor] = useState('')
   const [year, setYear]     = useState('')
 
+  // Debounce búsqueda
   useEffect(() => {
     const t = setTimeout(() => { setPage(1); setQ(qInput.trim()) }, 300)
     return () => clearTimeout(t)
@@ -28,6 +29,7 @@ export default function Books(){
     return Math.min(Math.max(1, p), max)
   }
 
+  // Función de carga
   async function load(){
     setLoading(true); setError('')
     try{
@@ -38,6 +40,8 @@ export default function Books(){
     }catch(e){ setError(e.message || 'Error al cargar') }
     finally{ setLoading(false) }
   }
+
+  // Carga cada vez que cambian filtros o página 
   useEffect(() => { load() }, [q, sort, order, page])
 
   async function onCreate(e){
@@ -49,20 +53,24 @@ export default function Books(){
       await load()
     }catch(e){ setError(e.message || 'Error al crear') }
   }
+
   async function onToggle(id, current){
     setError('')
     try{ await apiUpdate(`/books/${id}`, { read: !current }); await load() }
     catch(e){ setError(e.message || 'Error al actualizar') }
   }
+
   async function onDelete(id){
     if(!confirm('¿Eliminar este libro?')) return
     setError('')
     try{
       await apiDelete(`/books/${id}`)
-      const newTotal = Math.max(0, total-1)
+
+      // se elimina la llamada directa a load() y dejamos que useEffect recargue automáticamente
+      const newTotal = Math.max(0, total - 1)
       const maxPage  = Math.max(1, Math.ceil(newTotal / PAGE_SIZE))
       setPage(p => Math.min(p, maxPage))
-      await load()
+      
     }catch(e){ setError(e.message || 'Error al eliminar') }
   }
 
@@ -139,8 +147,8 @@ export default function Books(){
             <div className="footer">
               <div>Mostrando {books.length} de {total} • Página {page} de {totalPages}</div>
               <div>
-                <button className="ghost" onClick={() => setPage(p => clampPage(p-1))} disabled={page<=1}>Anterior</button>
-                <button className="ghost" onClick={() => setPage(p => clampPage(p+1))} disabled={page>=totalPages}>Siguiente</button>
+                <button className="ghost" onClick={() => setPage(Math.max(1, page-1))} disabled={page<=1}>Anterior</button>
+                <button className="ghost" onClick={() => setPage(Math.min(totalPages, page+1))} disabled={page>=totalPages}>Siguiente</button>
               </div>
             </div>
           </>
