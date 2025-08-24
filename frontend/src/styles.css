@@ -1,0 +1,150 @@
+:root{
+  --bg:#f6f7f9;
+  --panel:#ffffff;
+  --text:#202124;
+  --muted:#5f6368;
+  --primary:#1a73e8;
+  --primary-hover:#1558b0;
+  --border:#e6e7eb;
+  --radius:10px;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.06);
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%;margin:0}
+body{
+  font:14px/1.55 "Roboto","Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Header */
+header.appbar{
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+.appbar-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand{font-weight:700;font-size:32px;color:var(--primary);letter-spacing:.2px}
+
+/* Layout */
+.container{
+  max-width:none;
+  width:100%;
+  margin:0 auto;
+  padding:20px 24px 28px;
+}
+.page{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  align-items:stretch;
+  min-height:calc(100vh - 96px);
+}
+
+/* Panel */
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+}
+.section{padding:22px}
+.panel-title{
+  margin:0 0 18px 0;
+  font-size:20px;
+  font-weight:700;
+}
+
+/* Form & controls (más plano + más espaciado) */
+label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+input[type="text"],input[type="number"]{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  color:var(--text);
+}
+input:focus{
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px rgba(26,115,232,.18);
+}
+input::placeholder{color:#9aa0a6}
+
+.form-grid{display:grid;gap:16px}
+.toolbar{display:grid;grid-template-columns:1.6fr .9fr .9fr;gap:16px}
+.group{min-width:200px}
+
+/* Toggle “select-like” */
+.selectlike{
+  display:inline-flex;gap:8px;background:#f1f3f4;border:1px solid var(--border);
+  border-radius:999px;padding:4px;
+}
+.selectlike button{
+  border:0;background:transparent;color:var(--muted);padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:600;
+}
+.selectlike button.active{background:#fff;color:var(--text);box-shadow:var(--shadow)}
+
+/* List */
+.list{margin-top:8px}
+.item{
+  display:grid;grid-template-columns:1fr 1fr 90px 120px 120px;gap:14px;
+  align-items:center;padding:16px 0;border-bottom:1px solid var(--border);
+}
+.item:last-child{border-bottom:0}
+.title{font-weight:600;font-size:15px}
+.muted{color:var(--muted);font-size:13px}
+
+/* Pills */
+.pill{
+  display:inline-block;padding:6px 12px;font-size:12px;border-radius:999px;
+  border:1px solid var(--border);text-align:center;min-width:84px;
+}
+.pill.ok{background:#eaf6ee;color:#117a37}
+.pill.no{background:#fdeaea;color:#a32222}
+
+/* Buttons (planos) */
+button{
+  appearance:none;border:0;border-radius:12px;padding:10px 16px;
+  font-weight:600;cursor:pointer;transition:background .2s,transform .03s,box-shadow .2s;
+}
+button{background:var(--primary);color:#fff}
+button:hover{background:var(--primary-hover)}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:.55;cursor:default;box-shadow:none}
+button.secondary{background:#e8f0fe;color:var(--primary)}
+button.secondary:hover{background:#d7e6ff}
+button.ghost{background:transparent;color:var(--muted)}
+button.ghost:hover{background:#f3f4f6}
+
+/* Footer / estados */
+.footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:16px;color:var(--muted);font-size:13px}
+.error{
+  border:1px solid #d93025;background:#fde8e6;color:#a50e0e;
+  padding:12px 14px;border-radius:12px;margin:12px 0;
+}
+.loading{display:flex;align-items:center;gap:10px;color:var(--muted)}
+.spinner{width:16px;height:16px;border-radius:50%;border:2px solid #e0e0e0;border-top-color:var(--primary);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{color:var(--muted);text-align:center;padding:28px 0}
+
+/* Responsive */
+@media (max-width:980px){
+  .page{grid-template-columns:1fr;min-height:auto}
+  .toolbar{grid-template-columns:1fr}
+}
